@@ -27,11 +27,11 @@ In this repository we release code and data for our PointNet++ classification an
 
 ### Installation
 
-Install [TensorFlow](https://www.tensorflow.org/install/). The code is tested under TF1.2 GPU version and Python 2.7 (version 3 should also work) on Ubuntu 14.04. There are also some dependencies for a few Python libraries for data processing and visualizations like `cv2`, `h5py` etc. It's highly recommended that you have access to GPUs.
+Install [TensorFlow](https://www.tensorflow.org/install/). The code is tested under TF1.13 GPU version and Python 3.6 on Ubuntu 16.04. There are also some dependencies for a few Python libraries for data processing and visualizations like `cv2`, `h5py` etc. It's highly recommended that you have access to GPUs.
 
 #### Compile Customized TF Operators
 
-The TF operators are included under `tf_ops`, you need to compile them (check `tf_xxx_compile.sh` under each ops subfolder) first. Update `nvcc` and `python` path if necessary. The code is tested under TF1.2.0. If you are using earlier version it's possible that you need to remove the `-D_GLIBCXX_USE_CXX11_ABI=0` flag in g++ command in order to compile correctly.
+The TF operators are included under `tf_ops`, you need to compile them (check `tf_xxx_compile.sh` under each ops subfolder) first. Update `nvcc` and `python` path if necessary. The code is tested under TF1.13.1. If you are using earlier version it's possible that you need to remove the `-D_GLIBCXX_USE_CXX11_ABI=0` flag in g++ command in order to compile correctly.
 
 To compile the operators in TF version >=1.4, you need to modify the compile scripts slightly.
 
@@ -87,17 +87,9 @@ To train a model to segment object parts for ShapeNet models:
 
 Preprocessed ShapeNetPart dataset (XYZ, normal and part labels) can be found [here (674MB)](https://shapenet.cs.stanford.edu/media/shapenetcore_partanno_segmentation_benchmark_v0_normal.zip). Move the uncompressed data folder to `data/shapenetcore_partanno_segmentation_benchmark_v0_normal`
 
-#### Semantic Scene Parsing
-
-See `scannet/README` and `scannet/train.py` for details.
-
 #### Visualization Tools
 
 We have provided a handy point cloud visualization tool under `utils`. Run `sh compile_render_balls_so.sh` to compile it and then you can try the demo with `python show3d_balls.py` The original code is from [here](http://github.com/fanhqme/PointSetGeneration).
-
-#### Prepare Your Own Data
-
-You can refer to [here](https://github.com/charlesq34/3dmodel_feature/blob/master/io/write_hdf5.py) on how to prepare your own HDF5 files for either classification or segmentation. Or you can refer to `modelnet_dataset.py` on how to read raw data files and prepare mini-batches from them. A more advanced way is to use TensorFlow's dataset APIs, for which you can find more documentations [here](https://www.tensorflow.org/programmers_guide/datasets).
 
 ### License
 
@@ -105,9 +97,7 @@ Our code is released under MIT License (see LICENSE file for details).
 
 ### Updates
 
-- 02/23/2018: Added support for multi-gpu training for the classification task.
-- 02/23/2018: Adopted a new way for data loading. No longer require manual data downloading to train a classification network.
-- 02/06/2018: Added sample training code for ScanNet semantic segmentation.
+- 
 
 ### Related Projects
 
