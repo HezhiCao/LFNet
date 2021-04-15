@@ -2,14 +2,14 @@
 
 ### LFNet: *Local Rotation Invariant Coordinate Frame for Robust Point Cloud Analysis*
 
-Created by Hezhi Cao, Ronghui Zhan, Yanxin Ma, Chao Ma and Jun zhang from National University of defense technology.
+Created by Hezhi Cao, Ronghui Zhan, Yanxin Ma, Chao Ma and Jun zhang from National University of Defense Technology.
 
 ### Citation
 
 If you find our work useful in your research, please consider citing:
 
 ```
-    @article{cao2021LFnet,
+    @article{cao2021LFNet,
       title={LFNet: Local Rotation Invariant Coordinate Frame for Robust Point Cloud Analysis},
       author={Hezhi Cao, Ronghui Zhan, Yanxin Ma, Chao Ma and Jun zhang},
       journal={IEEE Signal Processing Letters},
