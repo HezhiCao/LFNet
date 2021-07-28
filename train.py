@@ -246,7 +246,7 @@ def train_one_epoch(LOG_FOUT, sess, ops, train_writer, kernel_init):
 
         bsize = batch_data.shape[0]
         #
-        num_points = 1200
+        num_points = 2048
         batch_data=batch_data[:,:num_points,:]
         batch_data=batch_data[:, np.random.choice(num_points, args.num_point, False),:]
         axis_x = np.cross(batch_data[:, :, :3], batch_data[:, :, 3:])
@@ -323,7 +323,7 @@ def eval_one_epoch(LOG_FOUT, sess, ops, test_writer, kernel_init):
         batch_data, batch_label = TEST_DATASET.next_batch(augment=False,rotate=args.rotate)
         bsize = batch_data.shape[0]
         #
-        num_points = 1200
+        num_points = 2048
         batch_data=batch_data[:,:num_points,:]
         batch_data=batch_data[:, np.random.choice(num_points, args.num_point, False),:]
         axis_x=np.cross(batch_data[:,:,:3],batch_data[:,:,3:])
