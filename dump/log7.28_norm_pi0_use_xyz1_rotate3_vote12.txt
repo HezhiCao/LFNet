@@ -1,0 +1,55 @@
+Namespace(batch_size=32, d=[1, 2, 4], dump_dir='dump', fit=0, gpu=0, interp=0, knn=1, model='lfnet_ssn_cls', model_path='cls/model_iter_113_acc_0.905592_category.ckpt', norm_pi=0, normal='store_true', num_point=1024, num_votes=12, repeat_num=1, rotate=3, scale=1, use_xyz_feature=1)
+[[-0.00502088 -0.0074305   0.00957214]
+ [ 0.31270265  0.05144084 -0.57958619]
+ [-0.09457891 -0.45716911  0.46518531]
+ [-0.35016749 -0.39237722 -0.41055289]
+ [-0.10543907  0.36756431  0.5380058 ]
+ [-0.35108899  0.44618286 -0.34227107]
+ [ 0.33429657  0.57338233 -0.05720214]
+ [ 0.5639365  -0.01315     0.33838438]
+ [-0.64803601 -0.0278991   0.16717003]
+ [ 0.35918289 -0.56389049 -0.14304081]]
+Model restored.
+eval mean loss: 0.501388
+eval accuracy: 0.910859
+eval avg class acc: 0.873634
+  airplane:	1.000
+   bathtub:	0.900
+       bed:	0.980
+     bench:	0.800
+ bookshelf:	0.970
+    bottle:	0.990
+      bowl:	0.950
+       car:	0.990
+     chair:	0.980
+      cone:	0.950
+       cup:	0.700
+   curtain:	0.950
+      desk:	0.779
+      door:	0.900
+   dresser:	0.779
+flower_pot:	0.200
+ glass_box:	0.960
+    guitar:	1.000
+  keyboard:	1.000
+      lamp:	0.750
+    laptop:	1.000
+    mantel:	0.940
+   monitor:	0.950
+night_stand:	0.837
+    person:	0.950
+     piano:	0.930
+     plant:	0.910
+     radio:	0.800
+range_hood:	0.940
+      sink:	0.700
+      sofa:	0.960
+    stairs:	0.950
+     stool:	0.750
+     table:	0.860
+      tent:	0.850
+    toilet:	0.970
+  tv_stand:	0.870
+      vase:	0.850
+  wardrobe:	0.650
+      xbox:	0.750

@@ -1,0 +1,27 @@
+common:
+    gpu: 0
+    model: 'lfnet_ssn_seg'
+    num_point: 2048
+    learning_rate: 0.001
+    momentum: 0.9
+    optimizer: 'adam'
+    decay_step: 337620 #16881*20
+    decay_rate: 0.7 #0.7
+    normal: 'store_true'
+
+    log_dir: '../log_seg'
+    data_path: 'data/shapenetcore_partanno_segmentation_benchmark_v0_normal'
+    max_epoch: 251
+    batch_size: 16
+    save: 0
+    save_ckpt: 1
+    show: 0
+    scale: 1 #控制核心点的影响半径
+    interp: 0 #0:tri-linear 1: 1-dist/sita 2: tri/cnt(没softmax) 3:tri,方的子邻域，4：exp 5:
+    fit: 0 #0 :no fit(dim=3) 1: rotated fit 2: origin fit(dim=3)
+    d: [1,2,4] #[1,4,8]
+    knn: 2
+    nsample: [[48],[32]]
+    rotate: 3   #0: no rotate， 2: z rotate， 3:random rotate
+    use_xyz_feature: 1
+    norm_pi: 1

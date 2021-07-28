@@ -1,0 +1,28 @@
+common:
+    gpu: 0
+    model: 'lfnet_ssn_cls'
+    num_point: 1024
+    learning_rate: 0.001
+    momentum: 0.9
+    optimizer: 'adam'
+    decay_step: 200000
+    decay_rate: 0.7
+    normal: 'store_true'
+
+    log_dir: 'log_cls' #'origin'
+    data_path: '/data/modelnet40_normal_resampled'
+    model_path: ''
+    max_epoch: 251
+    batch_size: 16
+    save: 0
+    save_ckpt: 1
+    show: 1
+    scale: 1 #the proportion between the influence distance of kernel points and the radius of local region
+    interp: 0 #0:tri-linear 1: tri/(1-dist/sita) 2: tri/cnt(without softmax)
+    d: [1,2,4] #[1,4,8] # the step of dilated knn
+    knn: 1
+    nsample: [[48],[32]]
+    rotate: 3   #0: no rotate， 2: z rotate， 3:random rotate  ##note that the training set is set to 0 all the time
+    use_xyz_feature: 1
+    norm_pi: 0
+
