@@ -1,6 +1,6 @@
 # LFNet
 
-### LFNet: *Local Rotation Invariant Coordinate Frame for Robust Point Cloud Analysis*
+### LFNet: *Local Rotation Invariant Coordinate Frame for Robust Point Cloud Analysis* [[pdf](https://www.researchgate.net/publication/348141380_LFNet_Local_Rotation_Invariant_Coordinate_Frame_for_Robust_Point_Cloud_Analysis)] [[CVF](https://ieeexplore.ieee.org/document/9311810)]
 
 Created by Hezhi Cao, Ronghui Zhan, Yanxin Ma, Chao Ma and Jun zhang from National University of Defense Technology.
 
@@ -27,7 +27,7 @@ Install [TensorFlow](https://www.tensorflow.org/install/). The code is tested un
 
 #### Compile Customized TF Operators
 
-The TF operators are included under `tf_ops`, you need to compile them (check `tf_xxx_compile.sh` under each ops subfolder) first. Update `nvcc` and `python` path if necessary. The code is tested under TF1.13.1. If you are using earlier version it's possible that you need to remove the `-D_GLIBCXX_USE_CXX11_ABI=0` flag in g++ command in order to compile correctly.
+The TF operators are included under `tf_ops`, you need to compile them (check `tf_xxx_compile.sh` under each ops subfolder) first. Update `nvcc` and `python` path if necessary. The code is tested under TF1.13. If you are using earlier version it's possible that you need to remove the `-D_GLIBCXX_USE_CXX11_ABI=0` flag in g++ command in order to compile correctly.
 
 To compile the operators in TF version >=1.4, you need to modify the compile scripts slightly.
 
@@ -40,6 +40,16 @@ First, find Tensorflow include and library paths.
 
 Then, add flags of `-I$TF_INC/external/nsync/public -L$TF_LIB -ltensorflow_framework` to the `g++` commands.
 
+### Dataset
+
+__Shape Classification__
+
+Download and unzip [ModelNet40](https://shapenet.cs.stanford.edu/media/modelnet40_normal_resampled.zip) (1.6G). Replace `$data_path$` in `cfgs/config_*_cls.yaml` with the dataset parent path.
+
+__ShapeNet Part Segmentation__
+
+Download and unzip [ShapeNet Part](https://shapenet.cs.stanford.edu/media/shapenetcore_partanno_segmentation_benchmark_v0_normal.zip) (674M). Replace `$data_path$` in `cfgs/config_*_partseg.yaml` with the dataset path.
+
 ### Usage
 
 #### Shape Classification
@@ -50,52 +60,34 @@ To train a PointNet++ model to classify ModelNet40 shapes (using point clouds wi
     python train.py
 ```
 
-To see all optional arguments for training:
-
-```
-    python train.py -h
-```
-
-If you have multiple GPUs on your machine, you can also run the multi-GPU version training (our implementation is similar to the tensorflow [cifar10 tutorial](https://github.com/tensorflow/models/tree/master/tutorials/image/cifar10)):
-
-```
-    CUDA_VISIBLE_DEVICES=0,1 python train_multi_gpu.py --num_gpus 2
-```
-
 After training, to evaluate the classification accuracies (with optional multi-angle voting):
 
 ```
-    python evaluate.py --num_votes 12 
+    python evaluate.py
 ```
 
-*Side Note:* For the XYZ+normal experiment reported in our paper: (1) 5000 points are used and (2) a further random data dropout augmentation is used during training (see commented line after `augment_batch_data` in `train.py` and (3) the model architecture is updated such that the `nsample=128` in the first two set abstraction levels, which is suited for the larger point density in 5000-point samplings.
-
-To use normal features for classification: You can get our sampled point clouds of ModelNet40 (XYZ and normal from mesh, 10k points per shape) [here (1.6GB)](https://shapenet.cs.stanford.edu/media/modelnet40_normal_resampled.zip). Move the uncompressed data folder to `data/modelnet40_normal_resampled`
+You can use our model `cls/model_iter_113_acc_0.905592_category.ckpt` as the checkpoint in `evaluate.py`, and after this voting you will get an accuracy of 91.08% if all things go right.
 
 #### Object Part Segmentation
 
 To train a model to segment object parts for ShapeNet models:
 
 ```
-    cd part_seg
-    python train.py
+    cd shapenet_seg
+    python train_seg.py
 ```
 
-Preprocessed ShapeNetPart dataset (XYZ, normal and part labels) can be found [here (674MB)](https://shapenet.cs.stanford.edu/media/shapenetcore_partanno_segmentation_benchmark_v0_normal.zip). Move the uncompressed data folder to `data/shapenetcore_partanno_segmentation_benchmark_v0_normal`
+evaluate:
 
-#### Visualization Tools
+```
+    cd shapenet_seg
+    python evaluate_shapenet.py
+```
 
-We have provided a handy point cloud visualization tool under `utils`. Run `sh compile_render_balls_so.sh` to compile it and then you can try the demo with `python show3d_balls.py` The original code is from [here](http://github.com/fanhqme/PointSetGeneration).
+## Acknowledgement
 
-### License
+The code is heavily borrowed from [A-CNN](https://github.com/artemkomarichev/a-cnn).
 
-Our code is released under MIT License (see LICENSE file for details).
+## Contact
 
-### Updates
-
-- 
-
-### Related Projects
-
-- [PointNet: Deep Learning on Point Sets for 3D Classification and Segmentation](http://stanford.edu/~rqi/pointnet) by Qi et al. (CVPR 2017 Oral Presentation). Code and data released in [GitHub](https://github.com/charlesq34/pointnet).
-- [Frustum PointNets for 3D Object Detection from RGB-D Data](https://arxiv.org/abs/1711.08488) by Qi et al. (CVPR 2018) A novel framework for 3D object detection with RGB-D data. Based on 2D boxes from a 2D object detector on RGB images, we extrude the depth maps in 2D boxes to point clouds in 3D space and then realize instance segmentation and 3D bounding box estimation using PointNet/PointNet++. The method proposed has achieved first place on KITTI 3D object detection benchmark on all categories (last checked on 11/30/2017). Code and data release TBD.
+If you have some ideas or questions about our research to share with us, please contact caohezhi21@mail.ustc.edu.cn
