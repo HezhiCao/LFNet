@@ -1,6 +1,6 @@
 # LFNet
 
-### LFNet: *Local Rotation Invariant Coordinate Frame for Robust Point Cloud Analysis* [[pdf](https://www.researchgate.net/publication/348141380_LFNet_Local_Rotation_Invariant_Coordinate_Frame_for_Robust_Point_Cloud_Analysis)] [[CVF](https://ieeexplore.ieee.org/document/9311810)]
+### LFNet: *Local Rotation Invariant Coordinate Frame for Robust Point Cloud Analysis* [[pdf](https://www.researchgate.net/publication/348141380_LFNet_Local_Rotation_Invariant_Coordinate_Frame_for_Robust_Point_Cloud_Analysis)] [[SPL](https://ieeexplore.ieee.org/document/9311810)]
 
 Created by Hezhi Cao, Ronghui Zhan, Yanxin Ma, Chao Ma and Jun zhang from National University of Defense Technology.
 
