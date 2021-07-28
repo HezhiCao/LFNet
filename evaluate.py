@@ -240,7 +240,7 @@ if __name__=='__main__':
     args.use_xyz_feature=1
     args.num_votes=12
     args.norm_pi=0
-    LOG_FOUT = open(os.path.join(DUMP_DIR, 'log_norm_pi%d_use_xyz%d_rotate%d_vote%d.txt')%(args.norm_pi,args.use_xyz_feature,args.rotate,args.num_votes), 'w')
+    LOG_FOUT = open(os.path.join(DUMP_DIR, 'cls_norm_pi%d_use_xyz%d_rotate%d_vote%d.txt')%(args.norm_pi,args.use_xyz_feature,args.rotate,args.num_votes), 'w')
     LOG_FOUT.write(str(args) + '\n')
     LOG_FOUT.write(str(kernel_init) + '\n')
 

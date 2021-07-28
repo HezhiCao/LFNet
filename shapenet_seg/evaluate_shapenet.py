@@ -23,6 +23,7 @@ import yaml
 parser = argparse.ArgumentParser()
 parser.add_argument('--config', default='../cfgs/config_ssn_seg.yaml', type=str)
 parser.add_argument('--jitter_normal', type=int, default=1, help='jitter normal or not')
+parser.add_argument('--dump_dir',default='dump',type=str, help='normalize axis or not[default: 0]')
 args = parser.parse_args()
 
 with open(args.config) as f:
@@ -39,14 +40,15 @@ EPOCH_CNT = 0
 BATCH_SIZE = args.batch_size
 NUM_POINT = args.num_point
 GPU_INDEX = args.gpu
+DUMP_DIR=args.dump_dir
 
 # MODEL_PATH = args.model_path
 MODEL = importlib.import_module(args.model) # import network module
 MODEL_FILE = os.path.join(ROOT_DIR, 'models', args.model+'.py')
-LOG_DIR = args.log_dir
-if not os.path.exists(LOG_DIR): os.mkdir(LOG_DIR)
-os.system('cp %s %s' % (MODEL_FILE, LOG_DIR)) # bkp of model def
-os.system('cp train.py %s' % (LOG_DIR)) # bkp of train procedure
+#LOG_DIR = args.log_dir
+#if not os.path.exists(LOG_DIR): os.mkdir(LOG_DIR)
+#os.system('cp %s %s' % (MODEL_FILE, LOG_DIR)) # bkp of model def
+#os.system('cp train.py %s' % (LOG_DIR)) # bkp of train procedure
 
 NUM_CLASSES = 50
 
@@ -271,8 +273,8 @@ if __name__ == "__main__":
     args.norm_pi=1
 
     args.jitter_normal=0
-    # LOG_FOUT = open(os.path.join(LOG_DIR, 'log0%d_norm_pi%d_rotate%d_vote%d_normalize1_jitter_normal%d.txt'%(Log,args.norm_pi,rotate,VOTE_NUM,args.jitter_normal)), 'w')
-    LOG_FOUT = open(os.path.join(LOG_DIR, 'log6.26_6.%d_norm_pi%d_rotate%d_vote%d_normalize1_jitter_normal%d.txt'%(Log,args.norm_pi,args.rotate,VOTE_NUM,args.jitter_normal)), 'w')
+    # LOG_FOUT = open(os.path.join(DUMP_DIR, 'log0%d_norm_pi%d_rotate%d_vote%d_normalize1_jitter_normal%d.txt'%(Log,args.norm_pi,rotate,VOTE_NUM,args.jitter_normal)), 'w')
+    LOG_FOUT = open(os.path.join(DUMP_DIR, 'seg_%d_norm_pi%d_rotate%d_vote%d_normalize1_jitter_normal%d.txt'%(Log,args.norm_pi,args.rotate,VOTE_NUM,args.jitter_normal)), 'w')
     log_string(LOG_FOUT, 'pid: %s' % (str(os.getpid())))
     args.model_path = '../log_seg/log0%d/model_best_acc_inst.ckpt'%Log
     LOG_FOUT.write(str(args) + '\n')
