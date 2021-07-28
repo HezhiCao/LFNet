@@ -23,7 +23,7 @@ This work is based on our SPL paper.
 
 ### Installation
 
-Install [TensorFlow](https://www.tensorflow.org/install/). The code is tested under TF1.13 GPU version and Python 3.6 on Ubuntu 16.04. There are also some dependencies for a few Python libraries for data processing and visualizations like `cv2`, `h5py` etc. It's highly recommended that you have access to GPUs.
+Install [TensorFlow](https://www.tensorflow.org/install/). The code is tested under TF1.13 GPU version and Python 3.6 on Ubuntu 16.04. 
 
 #### Compile Customized TF Operators
 
