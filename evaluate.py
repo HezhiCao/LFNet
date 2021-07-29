@@ -46,23 +46,21 @@ if not os.path.exists(DUMP_DIR): os.mkdir(DUMP_DIR)
 
 NUM_CLASSES = 40
 SHAPE_NAMES = [line.rstrip() for line in \
-    open('/home/inshallah/Documents/data/modelnet40_normal_resampled/modelnet40_shape_names.txt')]
+    open(args.data_path+'/modelnet40_shape_names.txt')]
 
 HOSTNAME = socket.gethostname()
 
 # Shapenet official train/test split
 if args.normal:
     assert(NUM_POINT<=10000)
-    DATA_PATH = '/home/inshallah/Documents/data/modelnet40_normal_resampled'
+    DATA_PATH = args.data_path
     TRAIN_DATASET = modelnet_dataset.ModelNetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train', normal_channel=args.normal, batch_size=BATCH_SIZE)
     TEST_DATASET = modelnet_dataset.ModelNetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test', normal_channel=args.normal, batch_size=BATCH_SIZE)
 
-    #h5_file_origin
-    # DATA_PATH = '/home/inshallah/Documents/data/modelnet40_ply_hdf5_2048_origin'
-    # TEST_DATASET = modelnet_h5_dataset.ModelNetH5Dataset(os.path.join(DATA_PATH,'test_files.txt'), batch_size = BATCH_SIZE, npoints = NUM_POINT, shuffle=False)
-    # estimated
-    # DATA_PATH ='/media/inshallah/inshallah/datasets/'
-    # TEST_DATASET = modelnet_h5_dataset.ModelNetH5Dataset( os.path.join(DATA_PATH, 'modelnet40_ply_hdf5_2048_estimated/test_files.txt'), batch_size=BATCH_SIZE,npoints=NUM_POINT, shuffle=False)
+    #h5_file
+    ## DATA_PATH ='/datasets/modelnet40_ply_hdf5_2048'
+    # DATA_PATH =args.data_path
+    # TEST_DATASET = modelnet_h5_dataset.ModelNetH5Dataset( os.path.join(DATA_PATH, '/test_files.txt'), batch_size=BATCH_SIZE,npoints=NUM_POINT, shuffle=False)
 
 def log_string(out_str):
     LOG_FOUT.write(out_str+'\n')
@@ -152,9 +150,8 @@ def eval_one_epoch(sess, ops, kernel_init,f,num_votes=1,rotate=0, topk=1):
         cur_batch_label[0:bsize] = batch_label
 
         for vote_idx in range(num_votes):
-            num_points=2048
-            original_data = np.copy(batch_data[:,:num_points,:])
-            original_data=original_data[:,np.random.choice(original_data.shape[1], args.num_point, False),:]
+            original_data = np.copy(batch_data[:,:args.num_point,:])
+            # original_data=original_data[:,np.random.choice(original_data.shape[1], args.num_point, False),:]
             if vote_idx>0:
                 jittered_data = provider.random_scale_point_cloud(original_data[:, :, 0:3])
             #     # jittered_data = provider.jitter_point_cloud(jittered_data[:,:,:3])
@@ -235,6 +232,7 @@ if __name__=='__main__':
                [5.38774332e-01, -8.45835742e-01, -2.14561211e-01]]
     kernel_init = np.array(kernel1) * 2/3
     args.model_path='cls/model_iter_113_acc_0.905592_category.ckpt'
+    args.batch_size= 32
     args.repeat_num= 1
     args.rotate=3
     args.use_xyz_feature=1
