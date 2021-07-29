@@ -60,7 +60,7 @@ if args.normal:
     #h5_file
     ## DATA_PATH ='/datasets/modelnet40_ply_hdf5_2048'
     # DATA_PATH =args.data_path
-    # TEST_DATASET = modelnet_h5_dataset.ModelNetH5Dataset( os.path.join(DATA_PATH, '/test_files.txt'), batch_size=BATCH_SIZE,npoints=NUM_POINT, shuffle=False)
+    # TEST_DATASET = modelnet_h5_dataset.ModelNetH5Dataset( os.path.join(DATA_PATH, 'test_files.txt'), batch_size=BATCH_SIZE,npoints=NUM_POINT, shuffle=False)
 
 def log_string(out_str):
     LOG_FOUT.write(out_str+'\n')

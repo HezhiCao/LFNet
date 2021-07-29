@@ -63,9 +63,9 @@ if args.normal:
     DATA_PATH = args.data_path
     TRAIN_DATASET = modelnet_dataset.ModelNetDataset(root=DATA_PATH, npoints=2048, split='train', normal_channel=args.normal, batch_size=BATCH_SIZE)
     TEST_DATASET = modelnet_dataset.ModelNetDataset(root=DATA_PATH, npoints=2048, split='test', normal_channel=args.normal, batch_size=BATCH_SIZE)
-    # TRAIN_DATASET = modelnet_h5_dataset.ModelNetH5Dataset(DATA_PATH+'/train_files.txt', batch_size=BATCH_SIZE,
+    # TRAIN_DATASET = modelnet_h5_dataset.ModelNetH5Dataset(DATA_PATH,'train_files.txt', batch_size=BATCH_SIZE,
     #     npoints=NUM_POINT, shuffle=True)
-    # TEST_DATASET = modelnet_h5_dataset.ModelNetH5Dataset(DATA_PATH+'/test_files.txt', batch_size=BATCH_SIZE,
+    # TEST_DATASET = modelnet_h5_dataset.ModelNetH5Dataset(DATA_PATH,'test_files.txt', batch_size=BATCH_SIZE,
     #     npoints=NUM_POINT, shuffle=False)
 
 def log_string(LOG_FOUT,out_str):
