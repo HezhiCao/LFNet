@@ -17,7 +17,6 @@ sys.path.append(os.path.join(BASE_DIR, 'utils'))
 import provider
 import tf_util
 import modelnet_dataset
-import modelnet_dataset_rotate
 import modelnet_h5_dataset
 import yaml
 import matplotlib.pyplot as plt
@@ -28,7 +27,7 @@ parser.add_argument('--config', default='cfgs/config_ssn_cls.yaml', type=str)
 args = parser.parse_args()
 
 with open(args.config) as f:
-    config = yaml.load(f)
+    config = yaml.load(f, Loader=yaml.FullLoader)
 print("\n**************************")
 for k, v in config['common'].items():
     setattr(args, k, v)
@@ -62,11 +61,11 @@ NUM_CLASSES = 40
 if args.normal:
     assert(NUM_POINT<=10000)
     DATA_PATH = args.data_path
-    TRAIN_DATASET = modelnet_dataset_rotate.ModelNetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train', normal_channel=args.normal, batch_size=BATCH_SIZE)
-    TEST_DATASET = modelnet_dataset_rotate.ModelNetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test', normal_channel=args.normal, batch_size=BATCH_SIZE)
-    # TRAIN_DATASET = modelnet_h5_dataset.ModelNetH5Dataset('/home/inshallah/Documents/data/modelnet40_ply_hdf5_2048/train_files.txt', batch_size=BATCH_SIZE,
+    TRAIN_DATASET = modelnet_dataset.ModelNetDataset(root=DATA_PATH, npoints=2048, split='train', normal_channel=args.normal, batch_size=BATCH_SIZE)
+    TEST_DATASET = modelnet_dataset.ModelNetDataset(root=DATA_PATH, npoints=2048, split='test', normal_channel=args.normal, batch_size=BATCH_SIZE)
+    # TRAIN_DATASET = modelnet_h5_dataset.ModelNetH5Dataset(DATA_PATH+'/train_files.txt', batch_size=BATCH_SIZE,
     #     npoints=NUM_POINT, shuffle=True)
-    # TEST_DATASET = modelnet_h5_dataset.ModelNetH5Dataset('/home/inshallah/Documents/data/modelnet40_ply_hdf5_2048/test_files.txt', batch_size=BATCH_SIZE,
+    # TEST_DATASET = modelnet_h5_dataset.ModelNetH5Dataset(DATA_PATH+'/test_files.txt', batch_size=BATCH_SIZE,
     #     npoints=NUM_POINT, shuffle=False)
 
 def log_string(LOG_FOUT,out_str):
@@ -104,7 +103,7 @@ def train(kernel_init,LOG_DIR,LOG_FOUT, acc_out):
     os.system('cp tf_ops/transforming/tf_transforming_g.cu %s' % (LOG_DIR))
     os.system('cp models/lfnet_ssn_cls.py %s' % (LOG_DIR))
     os.system('cp utils/pointnet_util.py %s' % (LOG_DIR))
-    os.system('cp modelnet_h5_dataset.py %s' % (LOG_DIR))
+    # os.system('cp modelnet_h5_dataset.py %s' % (LOG_DIR))
     LOG_FOUT.write(str(args) + '\n')
     with tf.Graph().as_default():
         with tf.device('/gpu:'+str(GPU_INDEX)):
@@ -120,7 +119,7 @@ def train(kernel_init,LOG_DIR,LOG_FOUT, acc_out):
             tf.summary.scalar('bn_decay', bn_decay)
 
             # Get model and loss
-            pred, end_points, kernel_out, weight, kernel_fit = MODEL.get_model(pointclouds_pl, normals_pl,axis_x,axis_y, kernel, args.scale, args.interp, args.fit,
+            pred, end_points, kernel_out, weight, kernel_fit = MODEL.get_model(pointclouds_pl, normals_pl,axis_x,axis_y, kernel, args.scale, args.interp, 0,
                                                                                is_training_pl,bn_decay=bn_decay,d=args.d,knn=args.knn,nsample=args.nsample,
                                                                                use_xyz_feature=args.use_xyz_feature)
             MODEL.get_loss(pred, labels_pl, end_points)
@@ -248,7 +247,7 @@ def train_one_epoch(LOG_FOUT, sess, ops, train_writer, kernel_init):
         #
         num_points = 2048
         batch_data=batch_data[:,:num_points,:]
-        batch_data=batch_data[:, np.random.choice(num_points, args.num_point, False),:]
+        batch_data=batch_data[:, np.random.choice(batch_data.shape[1], NUM_POINT, False),:]
         axis_x = np.cross(batch_data[:, :, :3], batch_data[:, :, 3:])
         if args.norm_pi:
             axis_x = axis_x / np.sqrt(np.sum(axis_x ** 2, axis=-1))[:, :, np.newaxis]
@@ -325,7 +324,7 @@ def eval_one_epoch(LOG_FOUT, sess, ops, test_writer, kernel_init):
         #
         num_points = 2048
         batch_data=batch_data[:,:num_points,:]
-        batch_data=batch_data[:, np.random.choice(num_points, args.num_point, False),:]
+        batch_data=batch_data[:, np.random.choice(batch_data.shape[1], NUM_POINT, False),:]
         axis_x=np.cross(batch_data[:,:,:3],batch_data[:,:,3:])
         if args.norm_pi:
             axis_x = axis_x / np.sqrt(np.sum(axis_x ** 2, axis=-1))[:, :, np.newaxis]
@@ -395,23 +394,23 @@ if __name__ == "__main__":
         ax.scatter(kernel_init_3D[:, 0], kernel_init_3D[:, 1], kernel_init_3D[:, 2], color='red')
         plt.show()
 
-    for i in [0]:
-        print('********************************************************')
-        print('kernel %d' % (i))
-        EPOCH_CNT = 0
-        LOG_DIR = args.log_dir
-        if not os.path.exists(LOG_DIR): os.makedirs(LOG_DIR)
+    print('********************************************************')
+    print('kernel init ')
+    EPOCH_CNT = 0
+    LOG_DIR = args.log_dir
+    if not os.path.exists(LOG_DIR): os.makedirs(LOG_DIR)
 
-        LOG_FOUT = open(os.path.join(LOG_DIR, 'log_train.txt'), 'w')
-        acc_out = open(os.path.join(LOG_DIR, 'test_acc.txt'), 'w')
-        log_string(LOG_FOUT, 'pid: %s' % (str(os.getpid())))
+    LOG_FOUT = open(os.path.join(LOG_DIR, 'log_train.txt'), 'w')
+    acc_out = open(os.path.join(LOG_DIR, 'test_acc.txt'), 'w')
+    log_string(LOG_FOUT, 'pid: %s' % (str(os.getpid())))
 
-        LOG_FOUT.write(str(kernel_init_3D[i, :, :]) + '\n')
-        test_acc = train(kernel_init_3D[i, :, :], LOG_DIR, LOG_FOUT,acc_out)
-        LOG_FOUT.close()
-        acc_out.close()
-        test_acc = np.loadtxt(LOG_DIR+'/test_acc.txt')
-        plt.plot(test_acc)
-        plt.show()
+    LOG_FOUT.write(str(kernel_init_3D) + '\n')
+    test_acc = train(kernel_init_3D, LOG_DIR, LOG_FOUT, acc_out)
+    LOG_FOUT.close()
+    acc_out.close()
+    test_acc = np.loadtxt(LOG_DIR + '/test_acc.txt')
+    plt.plot(test_acc)
+    plt.show()
+
 
 

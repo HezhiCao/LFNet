@@ -20,7 +20,7 @@ def pc_normalize(pc):
     return pc
 
 class ModelNetDataset():
-    def __init__(self, root, batch_size = 32, npoints = 1024, split='train', normalize=True, normal_channel=False, modelnet10=False, cache_size=15000, shuffle=None):
+    def __init__(self, root, batch_size = 32, npoints = 2048, split='train', normalize=True, normal_channel=False, modelnet10=False, cache_size=15000, shuffle=None):
         self.root = root
         self.batch_size = batch_size
         self.npoints = npoints

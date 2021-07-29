@@ -49,8 +49,9 @@ def getDataFiles(list_filename):
 def load_h5(h5_filename):
     f = h5py.File(h5_filename)
     data = f['data'][:]
+    normal = f['normal'][:]
     label = f['label'][:]
-    return (data, label)
+    return (np.concatenate([data,normal],axis=-1), label)
 
 def loadDataFile(filename):
     return load_h5(filename)
