@@ -22,7 +22,7 @@ common:
     d: [1,2,4] #[1,4,8] # the step of dilated knn
     knn: 1
     nsample: [[48],[32]]
-    rotate: 3   #0: no rotate， 2: z rotate， 3:random rotate  ##note that the training set is set to 0 all the time
+    rotate: 3   #0: no rotate， 2: z rotate， 3:random rotate  ##note that the trainingset is set to 0 all the time
     use_xyz_feature: 1
     norm_pi: 0
 
