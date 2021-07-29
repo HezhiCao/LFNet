@@ -58,13 +58,14 @@ def loadDataFile(filename):
 
 
 class ModelNetH5Dataset(object):
-    def __init__(self, list_filename, batch_size = 32, npoints = 1024, shuffle=False,normalize=True):
+    def __init__(self, root,list_filename, batch_size = 32, npoints = 1024, shuffle=False,normalize=True):
         self.list_filename = list_filename
         self.batch_size = batch_size
         self.npoints = npoints
         self.shuffle = shuffle
         self.normalize = normalize
-        self.h5_files = getDataFiles(self.list_filename)
+        self.h5_files = getDataFiles(os.path.join(root,list_filename))
+        self.root=root
         self.reset()
 
     @staticmethod
@@ -92,7 +93,7 @@ class ModelNetH5Dataset(object):
         self.batch_idx = 0
 
     def _get_data_filename(self):
-        return self.h5_files[self.file_idxs[self.current_file_idx]]
+        return os.path.join(self.root,self.h5_files[self.file_idxs[self.current_file_idx]])
 
     def _load_data_file(self, filename):
         self.current_data,self.current_label = loadDataFile(filename)
