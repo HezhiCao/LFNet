@@ -62,7 +62,7 @@ After training, to evaluate the classification accuracies (with optional multi-a
     python evaluate.py
 ```
 
-You can use our model `cls/model_iter_113_acc_0.905592_category.ckpt` as the checkpoint in `evaluate.py`, and after this voting you will get an accuracy of 91.08% if all things go right.
+You can use our model `cls/model_iter_113_acc_0.905592_category.ckpt` as the checkpoint in `evaluate.py`, and after this voting you will get an accuracy of 91.08% if all things go right.(90.56% during training)
 
 #### Object Part Segmentation
 
@@ -79,6 +79,9 @@ evaluate:
     cd shapenet_seg
     python evaluate_shapenet.py
 ```
+
+You can use our model `seg/model_best_acc_inst.ckpt` as the checkpoint in `evaluate_shapenet.py`, and after this voting you will get instance mIoU of 81.13% if all things go right.(81.01% during training)
+
 
 ## Acknowledgement
 
