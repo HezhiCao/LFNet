@@ -1,0 +1,64 @@
+pid: 4411
+Namespace(batch_size=2, config='../cfgs/config_ssn_seg.yaml', d=[1, 2, 4], data_path='/home/inshallah/Documents/data/shapenetcore_partanno_segmentation_benchmark_v0_normal', decay_rate=0.7, decay_step=337620, dump_dir='../dump', fit=0, gpu=0, interp=0, jitter_normal=0, knn=2, learning_rate=0.001, log_dir='../log_seg', max_epoch=251, model='lfnet_ssn_seg', model_path='../seg/model_best_acc_inst.ckpt', momentum=0.9, norm_pi=1, normal='store_true', nsample=[[48], [32]], num_point=2048, optimizer='adam', rotate=3, save=0, save_ckpt=1, scale=1, show=0, use_xyz_feature=1)
+[[-0.00502088 -0.0074305   0.00957214]
+ [ 0.31270265  0.05144084 -0.57958619]
+ [-0.09457891 -0.45716911  0.46518531]
+ [-0.35016749 -0.39237722 -0.41055289]
+ [-0.10543907  0.36756431  0.5380058 ]
+ [-0.35108899  0.44618286 -0.34227107]
+ [ 0.33429657  0.57338233 -0.05720214]
+ [ 0.5639365  -0.01315     0.33838438]
+ [-0.64803601 -0.0278991   0.16717003]
+ [ 0.35918289 -0.56389049 -0.14304081]]
+2021-08-01 11:02:41.313859
+---- EPOCH 000 EVALUATION ----
+000/1437
+050/1437
+100/1437
+150/1437
+200/1437
+250/1437
+300/1437
+350/1437
+400/1437
+450/1437
+500/1437
+550/1437
+600/1437
+650/1437
+700/1437
+750/1437
+800/1437
+850/1437
+900/1437
+950/1437
+1000/1437
+1050/1437
+1100/1437
+1150/1437
+1200/1437
+1250/1437
+1300/1437
+1350/1437
+1400/1437
+eval mean loss: 0.442109
+eval accuracy: 0.913768
+eval avg class acc: 0.798133
+eval mIoU of Airplane:	 0.810905
+eval mIoU of Bag:	 0.743931
+eval mIoU of Cap:	 0.776163
+eval mIoU of Car:	 0.681821
+eval mIoU of Chair:	 0.879026
+eval mIoU of Earphone:	 0.777136
+eval mIoU of Guitar:	 0.884848
+eval mIoU of Knife:	 0.822808
+eval mIoU of Lamp:	 0.819322
+eval mIoU of Laptop:	 0.629501
+eval mIoU of Motorbike:	 0.578259
+eval mIoU of Mug:	 0.924109
+eval mIoU of Pistol:	 0.728232
+eval mIoU of Rocket:	 0.491583
+eval mIoU of Skateboard:	 0.750356
+eval mIoU of Table:	 0.801713
+eval mean mIoU: 0.756232
+eval mean mIoU (all shapes): 0.811296

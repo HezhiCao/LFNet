@@ -23,7 +23,7 @@ import yaml
 parser = argparse.ArgumentParser()
 parser.add_argument('--config', default='../cfgs/config_ssn_seg.yaml', type=str)
 parser.add_argument('--jitter_normal', type=int, default=1, help='jitter normal or not')
-parser.add_argument('--dump_dir',default='dump',type=str, help='normalize axis or not[default: 0]')
+parser.add_argument('--dump_dir',default='../dump',type=str, help='normalize axis or not[default: 0]')
 args = parser.parse_args()
 
 with open(args.config) as f:
@@ -267,19 +267,18 @@ if __name__ == "__main__":
                [5.38774332e-01, -8.45835742e-01, -2.14561211e-01]]
     kernel_init = np.array(kernel1) * 2 / 3
 
-    Log =9
     args.rotate=3
     VOTE_NUM = 12
     args.norm_pi=1
 
     args.jitter_normal=0
     # LOG_FOUT = open(os.path.join(DUMP_DIR, 'log0%d_norm_pi%d_rotate%d_vote%d_normalize1_jitter_normal%d.txt'%(Log,args.norm_pi,rotate,VOTE_NUM,args.jitter_normal)), 'w')
-    LOG_FOUT = open(os.path.join(DUMP_DIR, 'seg_%d_norm_pi%d_rotate%d_vote%d_normalize1_jitter_normal%d.txt'%(Log,args.norm_pi,args.rotate,VOTE_NUM,args.jitter_normal)), 'w')
+    LOG_FOUT = open(os.path.join(DUMP_DIR, 'seg_norm_pi%d_rotate%d_vote%d_normalize1_jitter_normal%d.txt'%(args.norm_pi,args.rotate,VOTE_NUM,args.jitter_normal)), 'w')
     log_string(LOG_FOUT, 'pid: %s' % (str(os.getpid())))
-    args.model_path = '../log_seg/log0%d/model_best_acc_inst.ckpt'%Log
+    args.model_path = '../seg/model_best_acc_inst.ckpt'
     LOG_FOUT.write(str(args) + '\n')
     LOG_FOUT.write(str(kernel_init) + '\n')
-    evaluate(kernel_init, LOG_FOUT, d=[1, 2, 4], nsample=[[48], [32]], rotate=rotate,use_xyz_feature=1)
+    evaluate(kernel_init, LOG_FOUT, d=[1, 2, 4], nsample=[[48], [32]], rotate=args.rotate,use_xyz_feature=1)
     LOG_FOUT.close()
 
 
