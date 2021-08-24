@@ -83,7 +83,7 @@ def rotate_point_cloud_with_normal(batch_xyz_normal):
     return batch_xyz_normal
 
 def rotate_perturbation_point_cloud_with_normal(batch_data, angle_sigma=0.06, angle_clip=0.18):
-    """ Randomly perturb the point clouds by small rotations
+    """ Randomly perturb the point clouds
         Input:
           BxNx6 array, original batch of point clouds and point normals
         Return:
@@ -153,7 +153,7 @@ def rotate_point_cloud_by_angle_with_normal(batch_data, rotation_angle):
 
 
 def rotate_perturbation_point_cloud(batch_data, angle_sigma=0.06, angle_clip=0.18):
-    """ Randomly perturb the point clouds by small rotations
+    """ Randomly perturb the point clouds
         Input:
           BxNx3 array, original batch of point clouds
         Return:
