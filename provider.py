@@ -92,7 +92,7 @@ def rotate_perturbation_point_cloud_with_normal(batch_data, angle_sigma=0.06, an
     rotated_data = np.zeros(batch_data.shape, dtype=np.float32)
     for k in  range(batch_data.shape[0]):
         # angles = np.clip(angle_sigma*np.random.randn(3), -angle_clip, angle_clip)
-        angles = np.random.randn(3)
+        angles = [np.random.uniform() * 2 * np.pi for _ in range(3)]
         Rx = np.array([[1, 0, 0],
                        [0, np.cos(angles[0]), -np.sin(angles[0])],
                        [0, np.sin(angles[0]), np.cos(angles[0])]])
@@ -162,7 +162,7 @@ def rotate_perturbation_point_cloud(batch_data, angle_sigma=0.06, angle_clip=0.1
     rotated_data = np.zeros(batch_data.shape, dtype=np.float32)
     for k in  range(batch_data.shape[0]):
         # angles = np.clip(angle_sigma*np.random.randn(3), -angle_clip, angle_clip)
-        angles = np.random.randn(3)
+        angles = [np.random.uniform() * 2 * np.pi for _ in range(3)]
         Rx = np.array([[1,0,0],
                        [0,np.cos(angles[0]),-np.sin(angles[0])],
                        [0,np.sin(angles[0]),np.cos(angles[0])]])
